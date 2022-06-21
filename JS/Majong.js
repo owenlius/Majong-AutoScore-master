@@ -19,7 +19,7 @@ function Player(m_playerName, m_Point) {　　　　
 localStorage.setItem('roundNum', 1);
 var game = new Game(1, '东', 0);
 var InitScore = 25000;
-var player = [new Player('帅气的主播', InitScore), new Player('刘霸天', InitScore), new Player('刘霸天2号', InitScore), new Player('猛男！', InitScore)];
+var player = [new Player('帅气的主播', InitScore), new Player('刘霸天', InitScore), new Player('帅松', InitScore), new Player('猛男！', InitScore)];
 var game_state = new Array();
 
 var rong_flag = [false, false, false, false]; //胡牌
@@ -38,7 +38,7 @@ var game_isStart = false;
 
 var game_mode = 1;//1 半庄 2 速东 3 三麻 4 团战
 
-function next_Game(Is_oya_win,bencheng_keep_flag) {
+function next_Game(Is_oya_win,bencheng_keep_flag) {  // 下一把 不是下一轮
     game_isStart = true;
     if (Is_oya_win) {
         game.benchang += 1;
@@ -644,7 +644,7 @@ function totalScore(){
     $("#scoreTable").append('<tr id="scoreTitle"></tr>')
     $("#scoreTitle").append('<th>选手</th>')
     for(i=1; i<=roundNum; i++){
-        $("#scoreTitle").append('<th>round' + roundNum + '</th>')
+        $("#scoreTitle").append('<th>round' + i + '</th>')
     }
     $("#scoreTitle").append('<th>总分</th>')
     for(j=0;j<playerList.length;j++){
