@@ -1,5 +1,12 @@
 Majong-AutoScore
 ================
+个人使用扩展版本
+
+原版本链接https://github.com/Mahosyojyo/Majong-AutoScore
+
+
+
+================
 
 日麻自动算分器
 
