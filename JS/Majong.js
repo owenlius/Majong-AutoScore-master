@@ -584,6 +584,15 @@ function end_game() {
     UpdateAllView(false);
 }
 
+function end_game_no_record() {
+    game_isStart = false;
+    game = new Game(1, '东', 0);
+    player = [new Player(player[0].playerName, InitScore), new Player(player[1].playerName, InitScore), new Player(player[2].playerName, InitScore), new Player(player[3].playerName, InitScore)];
+    game_state = new Array();
+    RecordCurGameState();
+    UpdateAllView(false);
+}
+
 function change_game_mode() {
     if (game_isStart) {
         alert("请先结束战斗！！");
@@ -594,14 +603,14 @@ function change_game_mode() {
         $('#change_game_mode span').html('速东模式');
         game_mode = 2;
         InitScore = 20000;
-        end_game();
+        end_game_no_record();
     }
     else
     {
         $('#change_game_mode span').html('半庄模式');
         game_mode = 1;
         InitScore = 25000;
-        end_game();
+        end_game_no_record();
     }
 }
 
