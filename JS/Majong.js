@@ -17,6 +17,7 @@ function Player(m_playerName, m_Point) {　　　　
 }
 
 localStorage.setItem('roundNum', 1);
+chickenList = [0, 0, 0, 0]
 var game = new Game(1, '东', 0);
 var InitScore = 25000;
 var player = [new Player('帅气的主播', InitScore), new Player('刘霸天', InitScore), new Player('帅松', InitScore), new Player('猛男！', InitScore)];
@@ -422,12 +423,14 @@ function CalScore_OK() {
             for (var i = 0; i < 4; i++) {
                 if (i == zimo_idx) continue;
                 score_give(i, zimo_idx, ScoreUpper(base_score * 2) + 100 * game.benchang);
+                chickenList[zimo_idx] = 1;
             }
             next_Game(true, true);
         } else { //闲家自摸
             for (var i = 0; i < 4; i++) {
                 if (i == zimo_idx) continue;
                 score_give(i, zimo_idx, ScoreUpper(base_score * (1 + (i == game.jushu - 1))) + 100 * game.benchang);
+                chickenList[zimo_idx] = 1;
             }
             next_Game(false,false);
         }
@@ -447,6 +450,7 @@ function CalScore_OK() {
                 $("#player" + i + "_rong").text("胡牌");
                 $("#player" + i + "_rong").removeClass('t_btn_click');
                 rong_list.push([i, base_score]);
+                chickenList[i] = 1;
                 break;
             }
         }
@@ -564,6 +568,43 @@ function liuju_cal(score_list, oya_lose) {
 
 
 function end_game() {
+    chickenPlayer = [];
+    chickenSum = chickenList[0] + chickenList[1] + chickenList[2] + chickenList[3];
+    if(chickenSum == 1){
+        for(i=0;i<4;i++){
+            if(chickenList[i] == 0){
+                player[i].Point -= 5000
+                chickenPlayer.push(player[i].playerName + '-5000')
+            }else{
+                player[i].Point += 15000
+            }
+        }
+    }else{
+        if(chickenSum == 2){
+            for(i=0;i<4;i++){
+                if(chickenList[i] == 0){
+                    player[i].Point -= 5000
+                    chickenPlayer.push(player[i].playerName + '-5000')
+                }else{
+                    player[i].Point += 5000
+                }
+            }
+        }else{
+            if(chickenSum == 3){
+                for(i=0;i<4;i++){
+                    if(chickenList[i] == 0){
+                        player[i].Point -= 15000
+                        chickenPlayer.push(player[i].playerName + '-15000')
+                    }else{
+                        player[i].Point += 5000
+                    }
+                }
+            }
+        }
+    }
+    if(chickenPlayer.length>0){
+        alert('义眼丁真，鉴定为 烧!\n' + chickenPlayer.join('\n'));
+    }
     scoreRecord = {
         player0:{name:player[0].playerName,score:player[0].Point},
         player1:{name:player[1].playerName,score:player[1].Point},
@@ -571,7 +612,6 @@ function end_game() {
         player3:{name:player[3].playerName,score:player[3].Point}
     };
     scoreString = JSON.stringify(scoreRecord);
-
     roundNum = parseInt(localStorage.getItem('roundNum'));
     localStorage.setItem('round' + roundNum.toString(), scoreString);
     localStorage.setItem('roundNum', roundNum + 1);
@@ -579,6 +619,7 @@ function end_game() {
     game_isStart = false;
     game = new Game(1, '东', 0);
     player = [new Player(player[0].playerName, InitScore), new Player(player[1].playerName, InitScore), new Player(player[2].playerName, InitScore), new Player(player[3].playerName, InitScore)];
+    chickenList = [0, 0, 0, 0]
     game_state = new Array();
     RecordCurGameState();
     UpdateAllView(false);
