@@ -16,7 +16,9 @@ function Player(m_playerName, m_Point) {　　　　
     this.PointHistory = new Array();
 }
 
-localStorage.setItem('roundNum', 1);
+if(localStorage.getItem('roundNum') == 'NaN'){
+    localStorage.setItem('roundNum', 1);
+}
 chickenList = [0, 0, 0, 0];
 rankDict = {
     0: 15000,
@@ -45,6 +47,18 @@ var Draw_Line_Curl = true;
 var game_isStart = false;
 
 var game_mode = 1;//1 半庄 2 速东 3 三麻 4 团战
+
+function clear_record(){
+    localStorage.clear();
+    localStorage.setItem('roundNum', 1);
+    game_isStart = false;
+    game = new Game(1, '东', 0);
+    player = [new Player(player[0].playerName, InitScore), new Player(player[1].playerName, InitScore), new Player(player[2].playerName, InitScore), new Player(player[3].playerName, InitScore)];
+    chickenList = [0, 0, 0, 0]
+    game_state = new Array();
+    RecordCurGameState();
+    UpdateAllView(false);
+};
 
 function next_Game(Is_oya_win,bencheng_keep_flag) {  // 下一把 不是下一轮
     game_isStart = true;
