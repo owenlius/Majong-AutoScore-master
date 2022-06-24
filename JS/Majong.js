@@ -725,4 +725,5 @@ function totalScore(){
         $("#scoreRow" + j).append('<td>' + scoreSum + '</td>')
     }
 
+
 }
