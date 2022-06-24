@@ -17,7 +17,14 @@ function Player(m_playerName, m_Point) {　　　　
 }
 
 localStorage.setItem('roundNum', 1);
-chickenList = [0, 0, 0, 0]
+chickenList = [0, 0, 0, 0];
+rankDict = {
+    0: 15000,
+    1: 5000,
+    2: -5000,
+    3: -15000,
+}
+
 var game = new Game(1, '东', 0);
 var InitScore = 25000;
 var player = [new Player('帅气的主播', InitScore), new Player('刘霸天', InitScore), new Player('帅松', InitScore), new Player('猛男！', InitScore)];
@@ -568,6 +575,16 @@ function liuju_cal(score_list, oya_lose) {
 
 
 function end_game() {
+    rankList = [0,1,2,3].sort(sortRank);
+    alert(player[0].playerName + (rankList[0] + 1) + "位 " + rankDict[rankList[0]] + '\n' +
+        player[1].playerName + (rankList[1] + 1) + "位 " + rankDict[rankList[1]] + '\n' +
+        player[2].playerName + (rankList[2] + 1) + "位 " + rankDict[rankList[2]] + '\n' +
+        player[3].playerName + (rankList[3] + 1) + "位 " + rankDict[rankList[3]]
+    );
+    player[0].Point += rankDict[rankList[0]];
+    player[1].Point += rankDict[rankList[1]];
+    player[2].Point += rankDict[rankList[2]];
+    player[3].Point += rankDict[rankList[3]];
     chickenPlayer = [];
     chickenSum = chickenList[0] + chickenList[1] + chickenList[2] + chickenList[3];
     if(chickenSum == 1){
@@ -724,6 +741,5 @@ function totalScore(){
         }
         $("#scoreRow" + j).append('<td>' + scoreSum + '</td>')
     }
-
 
 }
