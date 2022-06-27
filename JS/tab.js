@@ -12,4 +12,5 @@ function nTabs(thisObj, Num) {
         }
     }
     totalScore();
+
 }

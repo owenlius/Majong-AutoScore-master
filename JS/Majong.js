@@ -589,7 +589,10 @@ function liuju_cal(score_list, oya_lose) {
 
 
 function end_game() {
-    rankList = [0,1,2,3].sort(sortRank);
+    rankList = [parseInt($("#player1 .weici").text().slice(0,1))-1,
+        parseInt($("#player2 .weici").text().slice(0,1))-1,
+        parseInt($("#player3 .weici").text().slice(0,1))-1,
+        parseInt($("#player4 .weici").text().slice(0,1))-1];
     alert(player[0].playerName + (rankList[0] + 1) + "位 " + rankDict[rankList[0]] + '\n' +
         player[1].playerName + (rankList[1] + 1) + "位 " + rankDict[rankList[1]] + '\n' +
         player[2].playerName + (rankList[2] + 1) + "位 " + rankDict[rankList[2]] + '\n' +
