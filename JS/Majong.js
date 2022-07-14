@@ -10,11 +10,13 @@ function Game(m_jushu, m_changfeng, m_benchang) {
     this.lichi_num = 0;
 }
 
-function Player(m_playerName, m_Point) {　　　　
-    this.playerName = m_playerName;　　　　
+function Player(m_playerName, m_Point) {
+    this.playerName = m_playerName;
     this.Point = m_Point;
     this.PointHistory = new Array();
 }
+
+// localStorage.setItem('paoking',)
 
 if(localStorage.getItem('roundNum') == 'NaN'){
     localStorage.setItem('roundNum', 1);
@@ -35,6 +37,8 @@ var game_state = new Array();
 var rong_flag = [false, false, false, false]; //胡牌
 var dianpao_flag = [false, false, false, false]; //点炮
 var lichi_flag = [false, false, false, false]; //立直
+var pao_count = [0, 0, 0, 0];
+var hu_count = [0, 0, 0, 0];
 
 var mainView = 0; //点差模式下主视角
 var rong_list = [-1]; //[点炮者,[胡牌者1,点数],[胡牌者2,点数]]
@@ -47,6 +51,8 @@ var Draw_Line_Curl = true;
 var game_isStart = false;
 
 var game_mode = 1;//1 半庄 2 速东 3 三麻 4 团战
+
+var no_print = 0;
 
 function clear_record(){
     localStorage.clear();
@@ -61,9 +67,11 @@ function clear_record(){
 };
 
 function next_Game(Is_oya_win,bencheng_keep_flag) {  // 下一把 不是下一轮
+    printGameStatus();
     game_isStart = true;
     if (Is_oya_win) {
         game.benchang += 1;
+        
     } else {
         if(bencheng_keep_flag)
             game.benchang += 1;
@@ -81,6 +89,34 @@ function next_Game(Is_oya_win,bencheng_keep_flag) {  // 下一把 不是下一�
             }
         }
     }
+    
+}
+
+function sortPao(a, b) {
+    if (pao_count[a] != pao_count[b])
+        return pao_count[a] - pao_count[b];
+    else
+        return pao_count[b] - pao_count[a];
+}
+function sortHu(a, b) {
+    if (hu_count[a] != hu_count[b])
+        return hu_count[a] - hu_count[b];
+    else
+        return hu_count[b] - hu_count[a];
+}
+
+function show_status() {
+    var ori = [0, 1, 2, 3];
+    ori = ori.sort(sortPao);
+    var ori2 = [0, 1, 2, 3];
+    ori2 = ori2.sort(sortHu);
+    alert('今日炮王已鉴定\n' + player[ori[3]].playerName + '! 点炮次数为' +  pao_count[ori[3]] + '次！\n' + '今日雀圣已鉴定\n' + 
+    player[ori2[3]].playerName + '! 和牌次数为' +  hu_count[ori2[3]] + '次！\n');
+    // alert(hu_count[0] + ' ' + hu_count[1] + ' ' + hu_count[2] + ' ' + hu_count[3] + '\n'
+    // + ori[0] + ' ' + ori[1] + ' ' + ori[2] + ' ' + ori[3]+ '\n'
+    // +pao_count[0] + ' ' + pao_count[1] + ' ' + pao_count[2] + ' ' + pao_count[3]+ '\n'
+    // + ori2[0] + ' ' + ori2[1] + ' ' + ori2[2] + ' ' + ori2[3]+ '\n');
+    
 }
 
 function chang_line_mode() {
@@ -114,6 +150,7 @@ function RecoverGameState() {
             game_state.pop();
             game = clone(game_state[game_state.length - 1].game);
             player = clone(game_state[game_state.length - 1].player);
+            $("#myTab0_Content3").append('<br>'  + '撤回' + '</br>');
             DrawLine();
             DrawPieChart();
             UpdateAllView();
@@ -238,6 +275,17 @@ function UpdateGameProcess() {
     var chn = ['一', '二', '三', '四'];
     $("#changkuang").text(game.changfeng + chn[game.jushu - 1] + '局');
     $("#benchangshu").text(game.benchang + '本场');
+    if (no_print == 0) {
+        $("#myTab0_Content3").append('<br>'+game.changfeng + chn[game.jushu - 1] + '局' + game.benchang + '本场' + '</br>');
+        
+    }
+}
+
+function printGameStatus() {
+    $("#myTab0_Content3").append(''+ '分数统计：'+player[0].playerName + ':' + player[0].Point);
+    $("#myTab0_Content3").append(':'+player[1].playerName + ':' + player[1].Point);
+    $("#myTab0_Content3").append(':'+player[2].playerName + ':' + player[2].Point);
+    $("#myTab0_Content3").append(':'+player[3].playerName + ':' + player[3].Point + '<br>');
 }
 
 //随机换座位
@@ -258,9 +306,11 @@ function rong_click(idx) {
     rong_flag[idx] = !rong_flag[idx];
     if (rong_flag[idx] == false) {
         $("#player" + idx + "_rong").text("自摸");
+        // $("#myTab0_Content3").append(player[idx].playerName+ ' 自摸！');
         $("#player" + idx + "_rong").removeClass('t_btn_click');
     } else {
         $("#player" + idx + "_rong").text("取消");
+        // $("#myTab0_Content3").append(player[idx].playerName+ ' 取消自摸！');
         $("#player" + idx + "_rong").addClass('t_btn_click');
         if (dianpao_flag[idx] == true) {
             $("#player" + idx + "_dianpao").text("点炮");
@@ -276,9 +326,11 @@ function dianpao_click(idx) {
     dianpao_flag[idx] = !dianpao_flag[idx];
     if (dianpao_flag[idx] == false) {
         $("#player" + idx + "_dianpao").text("点炮");
+        // $("#myTab0_Content3").append(player[idx].playerName+ ' 点炮！');
         $("#player" + idx + "_dianpao").removeClass('t_btn_click');
     } else {
         $("#player" + idx + "_dianpao").text("取消");
+        // $("#myTab0_Content3").append(player[idx].playerName+ ' 取消点炮！');
         $("#player" + idx + "_dianpao").addClass('t_btn_click');
         if (rong_flag[idx] == true) { //不可能同时胡牌和点炮
             $("#player" + idx + "_rong").text("自摸");
@@ -307,6 +359,7 @@ function lichi_click(idx) {
     if (lichi_flag[idx]) {
         $q('.playerinfoarea', idx).addClass("lichi");
         player[idx].Point -= 1000;
+        $("#myTab0_Content3").append(player[idx].playerName+ ' 立直！-' + 1000 + ' 点 ');
         game.lichi_num += 1;
         $('#player' + parseInt(idx + 1)).animate({
             left: "+=2%"
@@ -328,9 +381,12 @@ function lichi_click(idx) {
     } else {
         $q('.playerinfoarea', idx).removeClass("lichi");
         player[idx].Point += 1000;
+        $("#myTab0_Content3").append(player[idx].playerName+ ' +' + 1000 + ' 点 ');
         game.lichi_num -= 1
     }
+    no_print = 1;
     UpdateAllView();
+    no_print = 0;
 }
 
 function changeView(idx) {
@@ -441,18 +497,37 @@ function CalScore_OK() {
     var zimo_idx = rong_flag[0] ? 0 : (rong_flag[1] ? 1 : (rong_flag[2] ? 2 : 3));
     if (is_zimo) { //自摸    
         if (zimo_idx == game.jushu - 1) { //庄家自摸
+            var tmp = 0;
             for (var i = 0; i < 4; i++) {
-                if (i == zimo_idx) continue;
+                if (i == zimo_idx) {
+                    
+                    continue;
+                }
+                
                 score_give(i, zimo_idx, ScoreUpper(base_score * 2) + 100 * game.benchang);
+                tmp = ScoreUpper(base_score * 2) + 100 * game.benchang;
+                $("#myTab0_Content3").append('<STRONG>'+player[i].playerName+ '</STRONG> 失去' + tmp + ' 点 ');
                 chickenList[zimo_idx] = 1;
             }
+            $("#myTab0_Content3").append('<STRONG>'+player[zimo_idx].playerName+ '</STRONG> 自摸！得到' + tmp*3 + ' 点 ');
+            hu_count[zimo_idx]++;
+            $("#myTab0_Content3").append('<br>');
             next_Game(true, true);
         } else { //闲家自摸
             for (var i = 0; i < 4; i++) {
-                if (i == zimo_idx) continue;
+                var tmp = 0;
+                if (i == zimo_idx) {
+                    var tmp2 = base_score * 3 + 300 * game.benchang;
+                    $("#myTab0_Content3").append('<STRONG>'+player[zimo_idx].playerName+ '</STRONG> 自摸！得到' + tmp2+ ' 点 ');
+                    hu_count[zimo_idx]++;
+                    continue;
+                }
                 score_give(i, zimo_idx, ScoreUpper(base_score * (1 + (i == game.jushu - 1))) + 100 * game.benchang);
+                tmp = ScoreUpper(base_score * (1 + (i == game.jushu - 1))) + 100 * game.benchang;
+                $("#myTab0_Content3").append('<STRONG>'+player[i].playerName+ '</STRONG> 失去' + tmp + ' 点 ');
                 chickenList[zimo_idx] = 1;
             }
+            $("#myTab0_Content3").append('<br>');
             next_Game(false,false);
         }
         //处理立直棒
@@ -464,6 +539,7 @@ function CalScore_OK() {
     } //自摸-END
     else { //点炮
         var dianpao_player_idx = dianpao_flag[0] ? 0 : (dianpao_flag[1] ? 1 : (dianpao_flag[2] ? 2 : 3));
+        // $("#myTab0_Content3").append(player[dianpao_player_idx].playerName+ ' 放炮！失去 ' + base_score + ' 点 ');
         rong_list[0] = dianpao_player_idx;
         for (var i = 0; i < 4; i++) {
             if (rong_flag[i]) {
@@ -471,10 +547,12 @@ function CalScore_OK() {
                 $("#player" + i + "_rong").text("胡牌");
                 $("#player" + i + "_rong").removeClass('t_btn_click');
                 rong_list.push([i, base_score]);
+                
                 chickenList[i] = 1;
                 break;
             }
         }
+        $("#myTab0_Content3").append('<br>');
         Set_OKbtn_Text();
         if (rong_flag[0] + rong_flag[1] + rong_flag[2] + rong_flag[3] == 0) { //处理完全部胡牌了
             deal_dianpao();
@@ -485,7 +563,10 @@ function CalScore_OK() {
 
 }
 
-function collect_lichi(idx) { //第idx玩家获得剩下所有立直棒
+function collect_lichi(idx) { //第idx玩家获得剩下所有立直棒。
+    if (game.lichi_num != 0) {
+        $("#myTab0_Content3").append('<strong>'+player[idx].playerName+ '</strong> 得到立直棒 ' + game.lichi_num*1000 + ' 点 ');
+    }
     player[idx].Point += 1000 * game.lichi_num;
     game.lichi_num = 0;
 }
@@ -500,6 +581,11 @@ function deal_dianpao() {
         var rong_player = rong_list[i][0];
         var score = rong_list[i][1];
         score_give(dianpao_player, rong_player, ScoreUpper(score * (4 + 2 * (rong_player == game.jushu - 1))) + 300 * game.benchang);
+        var tmp = ScoreUpper(score * (4 + 2 * (rong_player == game.jushu - 1))) + 300 * game.benchang;
+        $("#myTab0_Content3").append('<STRONG>'+player[dianpao_player].playerName+ '</STRONG> 点炮！ ' + '<EM>' + player[rong_player].playerName 
+        + ' </EM>得到 '+ tmp + ' 点 ');
+        pao_count[dianpao_player]++;
+        hu_count[rong_player]++;
         //寻找最近的作为立直棒所有者
         var dis = rong_player > dianpao_player ? rong_player - dianpao_player : rong_player - dianpao_player + 4;
         if (nearest_dis > dis) {
@@ -555,7 +641,7 @@ function liuju() {
             }
             liuju_cal(tingpai, tingpai[game.jushu - 1] > 0 ? false : true);
         }
-
+        $("#myTab0_Content3").append('<td>' + playerList[j] + '</td>');
         $('#liuju_btn').text('流');
         $('.liuju_icon').removeClass('liuju_ting');
         $('.liuju_icon').addClass('liuju_noting');
@@ -723,6 +809,7 @@ function totalScore(){
             playerList.push(roundData['player3']['name'])
         };
     }
+    
     $("#myTab0_Content1").empty();
     $("#myTab0_Content1").append('<table id="scoreTable"></table>');
     $("#scoreTable").append('<tr id="scoreTitle"></tr>')
