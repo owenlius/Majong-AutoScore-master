@@ -29,6 +29,13 @@ rankDict = {
     3: -15000,
 }
 
+// rankDict = {
+//     0: 18000,
+//     1: 1000,
+//     2: -7000,
+//     3: -12000,
+// }
+
 var game = new Game(1, '东', 0);
 var InitScore = 25000;
 var player = [new Player('帅气的主播', InitScore), new Player('刘霸天', InitScore), new Player('帅松', InitScore), new Player('猛男！', InitScore)];
@@ -666,6 +673,7 @@ function liuju_cal(score_list, oya_lose) {
     if (game_area_lock) return;
     for (var i = 0; i < 4; i++) {
         player[i].Point += score_list[i];
+        // $("#myTab0_Content3").append('<strong>'+player[i].playerName+ '</strong>  + ' + score_list[i]+' 流局！！！！ ');
     }
     next_Game(!oya_lose,true);
     UpdateAllView();
