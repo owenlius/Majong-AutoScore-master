@@ -649,7 +649,6 @@ function liuju() {
             }
             liuju_cal(tingpai, tingpai[game.jushu - 1] > 0 ? false : true);
         }
-        $("#myTab0_Content3").append('<td>' + playerList[j] + '</td>');
         $('#liuju_btn').text('流');
         $('.liuju_icon').removeClass('liuju_ting');
         $('.liuju_icon').addClass('liuju_noting');
