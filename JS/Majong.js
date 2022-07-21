@@ -673,7 +673,7 @@ function liuju_cal(score_list, oya_lose) {
     if (game_area_lock) return;
     for (var i = 0; i < 4; i++) {
         player[i].Point += score_list[i];
-        // $("#myTab0_Content3").append('<strong>'+player[i].playerName+ '</strong>  + ' + score_list[i]+' 流局！！！！ ');
+        $("#myTab0_Content3").append('<strong>'+player[i].playerName+ '</strong>  + ' + score_list[i]+' 流局！！！！ <br>');
     }
     next_Game(!oya_lose,true);
     UpdateAllView();
