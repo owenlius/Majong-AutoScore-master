@@ -46,6 +46,7 @@ var dianpao_flag = [false, false, false, false]; //点炮
 var lichi_flag = [false, false, false, false]; //立直
 var pao_count = [0, 0, 0, 0];
 var hu_count = [0, 0, 0, 0];
+var totalRound = 1;
 
 var mainView = 0; //点差模式下主视角
 var rong_list = [-1]; //[点炮者,[胡牌者1,点数],[胡牌者2,点数]]
@@ -283,8 +284,8 @@ function UpdateGameProcess() {
     $("#changkuang").text(game.changfeng + chn[game.jushu - 1] + '局');
     $("#benchangshu").text(game.benchang + '本场');
     if (no_print == 0) {
-        $("#myTab0_Content3").append('<br>'+game.changfeng + chn[game.jushu - 1] + '局' + game.benchang + '本场' + '</br>');
-        
+        $("#myTab0_Content3").append('<br>'+game.changfeng + chn[game.jushu - 1] + '局' + game.benchang + '本场 ' + '总第' + totalRound+ '局' + '</br>');
+        totalRound++;
     }
 }
 
