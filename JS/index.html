@@ -198,7 +198,7 @@
     </div>
     <!-- Game Area End-->
     <div id="cal_area">
-        <fieldset id="fanshu_field">
+        <fieldset id="fanshu_field" >
             <legend style="font-size:15px">番数</legend>
             <input type="button" value="1番" id="1fan" class="fanfu_btn" onclick="fanshu_click(0)">
             <input type="button" value="2番" id="2fan" class="fanfu_btn" onclick="fanshu_click(1)">
@@ -210,6 +210,7 @@
             <input type="button" value="11-12番" id="1112fan" class="fanfu_btn" onclick="fanshu_click(7)">
             <input type="button" value="1倍役满" id="13fan" class="fanfu_btn" onclick="fanshu_click(8)">
         </fieldset>
+        <input type="button" value="确定" id="fanfu_ok" class="fanshu_ok_btn" onclick="CalScore_OK()">
         <fieldset id="fushu_field">
             <legend style="font-size:15px">符数</legend>
             <input type="button" value="20" id="20fu" class="fanfu_btn" onclick="fushu_click(0)">
@@ -225,7 +226,7 @@
             <input type="button" value="110" id="110fu" class="fanfu_btn" onclick="fushu_click(10)">
             <input type="button" value="120" id="120fu" class="fanfu_btn" onclick="fushu_click(11)">
         </fieldset>
-        <fieldset id="fushuhelp_field">
+        <!-- <fieldset id="fushuhelp_field" >
             <legend style="font-size:20px">符数计算工具</legend>
             <input type="button" value="嵌张/边张/单调听牌" id="fushuhelp1" class="fanfu_help_btn" onclick="toolhelp_clk(0)">
             <input type="button" value="门清自摸" id="fushuhelp2" class="fanfu_help_btn" onclick="toolhelp_clk(1)">
@@ -275,9 +276,9 @@
                     </td>
                 </tr>
             </table>
-        </fieldset>
+        </fieldset> -->
         <div style="border:1px dashed #F00;width:100%;margin:5px;float:left"></div>
-        <input type="button" value="确定" id="fanfu_ok" class="fanshu_ok_btn" onclick="CalScore_OK()">
+        
     </div>
     <div class="clear"> </div>
     <div id="myTab0_Content3" class="x x x">

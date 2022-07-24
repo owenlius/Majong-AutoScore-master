@@ -16,7 +16,7 @@ fieldset {
 }
 
 fieldset#playerName {
-    width: 80px;
+    width: 100px;
     float: left;
     height: 180px;
 }
@@ -78,9 +78,9 @@ fieldset#zeropointsetting {
 
 .playername {
     font-family: 'Droid Serif', serif;
-    font-size: 30px;
+    font-size: 24px;
     float: right;
-    width: 100px
+    width: 120px
 }
 
 .playerscore {
@@ -93,7 +93,7 @@ fieldset#zeropointsetting {
     height: 18px;
     font-size: 15px;
     text-align: center;
-    background: url(img/lichi.gif) no-repeat;
+    background: url(img/richi2.png) no-repeat;
     background-size: 100% 100%;
 }
 
@@ -151,7 +151,7 @@ fieldset#zeropointsetting {
     background-color: black;
     border: 5px solid #F0e;
     border-radius: 10px;
-    //font-size: 30px;
+    font-size: 30px;
     height: 50px;
 }
 
@@ -195,7 +195,7 @@ fieldset#zeropointsetting {
     margin-left: 510px;
     margin-right: 2px;
     padding: 5px;
-    //max-width: 500px;
+    max-width: 400px;
 }
 
 #fanshu_field {
@@ -279,7 +279,7 @@ fieldset#zeropointsetting {
 }
 
 .fanshu_ok_btn {
-    width: 80%;
+    width: -20%;
     height: 40px;
     margin: 3px;
     border-left: 1px solid #C0C0C0;
@@ -489,7 +489,7 @@ button.setting_btn span {
     height: 37%;
     left: 32%;
     top: 32%;
-    // border:1px solid #f00;
+    border:1px solid #f00;
 }
 
 #linechartContainer {
