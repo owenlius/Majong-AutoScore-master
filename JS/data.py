@@ -1,6 +1,6 @@
 import pandas as pd
 
-filename = 'log-2022-7-22.ini'
+filename = 'log-2022-07-23.ini'
 
 with open(filename, 'rb') as f:
     log_text = f.read().decode('utf-8')
@@ -34,23 +34,26 @@ for i in dianpao_list:
     point = i[i.index('得到')+3:i.index('0 点')+1]
     dianpao_result.append([pao_player, rong_player, point])
 
-zimo_list = list(filter(lambda x: '自摸' in x, log_list))
 
-zimo_result = []
-for i in zimo_list:
-    zimo = i.split('\xa0')
-    zimo_index = 0
-    for index, j in enumerate(zimo):
-        if '自摸' in j:
-            zimo_index = index
-    zimo_player = zimo[zimo_index-1]
-    lost_list = list(filter(lambda x: '失去' in x, zimo))
-    lost_list = [int(i[2:len(i)-2]) for i in lost_list]
-    point = sum(lost_list)
-    zimo_result.append([zimo_player, point])
 
 df_dianpao = pd.DataFrame(dianpao_result)
-df_dianpao.to_excel('dianpao.xlsx')
+df_dianpao.to_excel('dianpao-723.xlsx')
 
-df_zimo = pd.DataFrame(zimo_result)
-df_zimo.to_excel('zimo.xlsx')
+
+# zimo_list = list(filter(lambda x: '自摸' in x, log_list))
+
+# zimo_result = []
+# for i in zimo_list:
+#     zimo = i.split('\xa0')
+#     zimo_index = 0
+#     for index, j in enumerate(zimo):
+#         if '自摸' in j:
+#             zimo_index = index
+#     zimo_player = zimo[zimo_index-1]
+#     lost_list = list(filter(lambda x: '失去' in x, zimo))
+#     lost_list = [int(i[2:len(i)-2]) for i in lost_list]
+#     point = sum(lost_list)
+#     zimo_result.append([zimo_player, point])
+
+# df_zimo = pd.DataFrame(zimo_result)
+# df_zimo.to_excel('zimo-723.xlsx')
