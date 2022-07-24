@@ -1,11 +1,11 @@
 import pandas as pd
 
-filename = 'log-2022-7-16.ini'
+filename = 'log-2022-7-22.ini'
 
 with open(filename, 'rb') as f:
     log_text = f.read().decode('utf-8')
 
-log_list_org = log_text.split('\r\n')
+log_list_org = log_text.split('\n')
 
 log_list = list(filter(lambda x: x[4:6] != '本场', log_list_org))
 
