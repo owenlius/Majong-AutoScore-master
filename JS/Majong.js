@@ -215,8 +215,19 @@ function UpdateAllView() {
     UpdateGameProcess(); //更新右上角进度
     UpdateFengwei(); //更新风位
     UpdateRank(); //更新顺位
+    UpdateChicken(); //更新烧鸡！
     $("#lichi_num").text(game.lichi_num);
     random_dice();
+}
+
+function UpdateChicken() {
+    for (var i=0; i<4; i++){
+        if(chickenList[i]==0){
+            $("#player" + (i + 1) + " .yakitori").show()
+        }else{
+            $("#player" + (i + 1) + " .yakitori").hide()
+        }
+    }
 }
 
 function sortRank(a, b) {
