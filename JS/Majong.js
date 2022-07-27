@@ -332,8 +332,10 @@ function UpdateUserName() {
         $('.playername', $('.playerinfoarea')[i]).text(player[i].playerName);
         if(player[i].playerName in richi_img){
             $('.playerscorediff', $('.playerinfoarea')[i]).css('background','url(img/' + richi_img[player[i].playerName] + ') no-repeat');
+            $('.playerscorediff', $('.playerinfoarea')[i]).css('background-size','100% 100%');
         }else{
             $('.playerscorediff', $('.playerinfoarea')[i]).css('background','url(img/lichi.gif) no-repeat');
+            $('.playerscorediff', $('.playerinfoarea')[i]).css('background-size','100% 100%');
         }
     }
     DrawPieChart();
