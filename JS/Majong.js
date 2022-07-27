@@ -29,6 +29,11 @@ rankDict = {
     3: -15000,
 }
 
+richi_img = {
+    '帅气的主播': 'richi2.png',
+    '帅松': 'richi2.png',
+}
+
 set_list = [
     [0, 1, 2, 3],
     [0, 1, 3, 2],
@@ -325,6 +330,11 @@ function UpdateUserName() {
     for (var i = 0; i < 4; i++) {
         $("#playerName  input")[i].value = player[i].playerName;
         $('.playername', $('.playerinfoarea')[i]).text(player[i].playerName);
+        if(player[i].playerName in richi_img){
+            $('.playerscorediff', $('.playerinfoarea')[i]).css('background','url(img/' + richi_img[player[i].playerName] + ') no-repeat');
+        }else{
+            $('.playerscorediff', $('.playerinfoarea')[i]).css('background','url(img/lichi.gif) no-repeat');
+        }
     }
     DrawPieChart();
     DrawLine();
@@ -748,6 +758,12 @@ function end_game() {
         parseInt($("#player2 .weici").text().slice(0,1))-1,
         parseInt($("#player3 .weici").text().slice(0,1))-1,
         parseInt($("#player4 .weici").text().slice(0,1))-1];
+        $("#myTab0_Content3").append('<br>半庄结算:' +
+            player[0].playerName + ":" + (rankList[0] + 1) + "位:" + player[0].Point + ':' +
+            player[1].playerName + ":" + (rankList[1] + 1) + "位:" + player[1].Point + ':' +
+            player[2].playerName + ":" + (rankList[2] + 1) + "位:" + player[2].Point + ':' +
+            player[3].playerName + ":" + (rankList[3] + 1) + "位:" + player[3].Point +
+        '</br>');
     alert(player[0].playerName + (rankList[0] + 1) + "位 " + rankDict[rankList[0]] + '\n' +
         player[1].playerName + (rankList[1] + 1) + "位 " + rankDict[rankList[1]] + '\n' +
         player[2].playerName + (rankList[2] + 1) + "位 " + rankDict[rankList[2]] + '\n' +
