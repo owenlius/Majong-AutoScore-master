@@ -30,7 +30,7 @@ rankDict = {
 }
 
 richi_img = {
-    '帅气的主播': 'richi2.png',
+    '帅气的主播': 'jian.png',
     '帅松': 'richi2.png',
 }
 
