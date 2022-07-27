@@ -29,6 +29,33 @@ rankDict = {
     3: -15000,
 }
 
+set_list = [
+    [0, 1, 2, 3],
+    [0, 1, 3, 2],
+    [0, 2, 1, 3],
+    [0, 2, 3, 1],
+    [0, 3, 1, 2],
+    [0, 3, 2, 1],
+    [1, 0, 2, 3],
+    [1, 0, 3, 2],
+    [1, 2, 0, 3],
+    [1, 2, 3, 0],
+    [1, 3, 0, 2],
+    [1, 3, 2, 0],
+    [2, 0, 1, 3],
+    [2, 0, 3, 1],
+    [2, 1, 0, 3],
+    [2, 1, 3, 0],
+    [2, 3, 0, 1],
+    [2, 3, 1, 0],
+    [3, 0, 1, 2],
+    [3, 0, 2, 1],
+    [3, 1, 0, 2],
+    [3, 1, 2, 0],
+    [3, 2, 0, 1],
+    [3, 2, 1, 0],
+]
+
 // rankDict = {
 //     0: 18000,
 //     1: 1000,
@@ -185,6 +212,19 @@ $(document).ready(
         $('#fanfu_ok').attr("disabled", true);
 
         RecordCurGameState();
+        ChangeSetOption();
+        $("#change_set").bind('change', function(){
+            set_index = eval("[" + $("#change_set").val().slice($("#change_set").val().length-7,$("#change_set").val().length) + "]");
+            playername_0 = player[set_index[0]].playerName;
+            playername_1 = player[set_index[1]].playerName;
+            playername_2 = player[set_index[2]].playerName;
+            playername_3 = player[set_index[3]].playerName;
+            player[0].playerName = playername_0;
+            player[1].playerName = playername_1;
+            player[2].playerName = playername_2;
+            player[3].playerName = playername_3;
+            UpdateUserName();
+        })
         //set_tooltip();
     }
 );
@@ -288,6 +328,16 @@ function UpdateUserName() {
     }
     DrawPieChart();
     DrawLine();
+    ChangeSetOption();
+}
+
+
+function ChangeSetOption(){
+    $("#change_set").empty();
+    for(var i=0;i<24;i++){
+        $("#change_set").append("<option>" + "东:" + player[set_list[i][0]].playerName + " 南:" + player[set_list[i][1]].playerName +
+        " 西:" + player[set_list[i][2]].playerName + " 北:" + player[set_list[i][3]].playerName + set_list[i] + "</option>");
+    }
 }
 
 function UpdateGameProcess() {
