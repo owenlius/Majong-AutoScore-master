@@ -194,8 +194,8 @@
                 <div class="liuju_icon_inner">听</div>
             </div>
         </div>
-        <button id="99pai" class="corner_btn end99" onclick="liuju_cal([0,0,0,0],false)"><span>九种九牌</span></button>
-        <button id="4winds" class="corner_btn end4win" onclick="liuju_cal([0,0,0,0],true)"><span>四风连打</span></button>
+        <button id="99pai" class="corner_btn end99" onclick="liuju_cal([0,0,0,0],false);playJiupai();"><span>九种九牌</span></button>
+        <button id="4winds" class="corner_btn end4win" onclick="liuju_cal([0,0,0,0],true);playSifeng();"><span>四风连打</span></button>
         <div id="chartContainer"></div>
     </div>
     <!-- Game Area End-->
@@ -290,6 +290,16 @@
     </audio>
     <audio id="chao_bgm" controls hidden>
         <source src="./bgm/热烈决斗者.mp3" type="audio/mpeg">
+        <source src="horse.ogg" type="audio/ogg">
+        
+    </audio>
+    <audio id="sifeng_bgm" controls hidden>
+        <source src="./bgm/bamuwei-sifeng.mp3" type="audio/mpeg">
+        <source src="horse.ogg" type="audio/ogg">
+        
+    </audio>
+    <audio id="jiupai_bgm" controls hidden>
+        <source src="./bgm/bamuwei-jiupai.mp3" type="audio/mpeg">
         <source src="horse.ogg" type="audio/ogg">
         
     </audio>

@@ -954,3 +954,17 @@ function totalScore(){
     }
 
 }
+
+function playJiupai() {
+    var audio = document.getElementById('jiupai_bgm');
+    audio.pause();
+    audio.currentTime = 0;//音乐从头播放
+    audio.play();
+}
+
+function playSifeng() {
+    var audio = document.getElementById('sifeng_bgm');
+    audio.pause();
+    audio.currentTime = 0;//音乐从头播放
+    audio.play();
+}
