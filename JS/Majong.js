@@ -31,7 +31,7 @@ rankDict = {
 
 richi_img = {
     '帅气的主播': 'jian.png',
-    '帅松': 'richi2.png',
+    '帅松': 'sword3.png',
 }
 
 set_list = [
@@ -437,6 +437,22 @@ function dianpao_click(idx) {
 function lichi_click(idx) {
     if (game_area_lock) return;
     lichi_flag[idx] = !lichi_flag[idx];
+    if (player[idx].playerName == "帅松") {
+        var audio = document.getElementById('chao_bgm');
+        audio.pause();
+        var audio = document.getElementById('song_bgm');
+        audio.pause();
+        audio.currentTime = 0;//音乐从头播放
+        audio.play();
+    } else if (player[idx].playerName == "帅气的主播") {
+        var audio = document.getElementById('song_bgm');
+        audio.pause();
+        var audio = document.getElementById('chao_bgm');
+        audio.pause();
+        audio.currentTime = 0;//音乐从头播放
+        audio.play();
+    }
+
     if (lichi_flag[idx]) {
         $q('.playerinfoarea', idx).addClass("lichi");
         player[idx].Point -= 1000;
@@ -551,6 +567,10 @@ function score_give(from, to, score) {
 }
 
 function CalScore_OK() {
+    var audio = document.getElementById('chao_bgm');
+    audio.pause();
+    var audio = document.getElementById('song_bgm');
+    audio.pause();
     var rong_num = rong_flag[0] + rong_flag[1] + rong_flag[2] + rong_flag[3];
     var is_zimo = !dianpao_flag[0] && !dianpao_flag[1] && !dianpao_flag[2] && !dianpao_flag[3];
 
