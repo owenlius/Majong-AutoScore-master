@@ -1,6 +1,8 @@
 import pandas as pd
 
-file_list = ['log-2022-07-23.ini', 'log-2022-7-16.ini','log-2022-7-30.ini']
+# file_list = ['log-2022-07-23.ini', 'log-2022-7-16.ini','log-2022-7-30.ini']
+
+file_list = ['log-2022-7-31.ini']
 
 log_text = ''
 for filename in file_list:
