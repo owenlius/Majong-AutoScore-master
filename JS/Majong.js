@@ -21,6 +21,9 @@ function Player(m_playerName, m_Point) {
 if(localStorage.getItem('roundNum') == 'NaN'){
     localStorage.setItem('roundNum', 1);
 }
+if(localStorage.getItem('log') == 'NaN'){
+    localStorage.setItem('log', '');
+}
 chickenList = [0, 0, 0, 0];
 rankDict = {
     0: 15000,
@@ -191,6 +194,7 @@ function RecoverGameState() {
             game = clone(game_state[game_state.length - 1].game);
             player = clone(game_state[game_state.length - 1].player);
             $("#myTab0_Content3").append('<br>'  + '撤回' + '</br>');
+            localStorage.setItem('log', localStorage.getItem('log') + '撤回\n')
             DrawLine();
             DrawPieChart();
             UpdateAllView();
@@ -358,6 +362,7 @@ function UpdateGameProcess() {
     $("#benchangshu").text(game.benchang + '本场');
     if (no_print == 0) {
         $("#myTab0_Content3").append('<br>'+game.changfeng + chn[game.jushu - 1] + '局' + game.benchang + '本场 ' + '总第' + totalRound+ '局' + '</br>');
+        localStorage.setItem('log', localStorage.getItem('log') + game.changfeng + chn[game.jushu - 1] + '局' + game.benchang + '本场 ' + '总第' + totalRound+ '局\n' )
         totalRound++;
     }
 }
@@ -367,6 +372,10 @@ function printGameStatus() {
     $("#myTab0_Content3").append(':'+player[1].playerName + ':' + player[1].Point);
     $("#myTab0_Content3").append(':'+player[2].playerName + ':' + player[2].Point);
     $("#myTab0_Content3").append(':'+player[3].playerName + ':' + player[3].Point + '<br>');
+    localStorage.setItem('log', localStorage.getItem('log') + '分数统计：'+player[0].playerName + ':' + player[0].Point)
+    localStorage.setItem('log', localStorage.getItem('log') + '：'+player[1].playerName + ':' + player[1].Point)
+    localStorage.setItem('log', localStorage.getItem('log') + '：'+player[2].playerName + ':' + player[2].Point)
+    localStorage.setItem('log', localStorage.getItem('log') + '：'+player[3].playerName + ':' + player[3].Point + '\n')
 }
 
 //随机换座位
@@ -457,6 +466,7 @@ function lichi_click(idx) {
         $q('.playerinfoarea', idx).addClass("lichi");
         player[idx].Point -= 1000;
         $("#myTab0_Content3").append(player[idx].playerName+ ' 立直！-' + 1000 + ' 点 ');
+        localStorage.setItem('log', localStorage.getItem('log') + player[idx].playerName+ ' 立直！-' + 1000 + ' 点 ')
         game.lichi_num += 1;
         $('#player' + parseInt(idx + 1)).animate({
             left: "+=2%"
@@ -479,6 +489,7 @@ function lichi_click(idx) {
         $q('.playerinfoarea', idx).removeClass("lichi");
         player[idx].Point += 1000;
         $("#myTab0_Content3").append(player[idx].playerName+ ' +' + 1000 + ' 点 ');
+        localStorage.setItem('log', localStorage.getItem('log') + player[idx].playerName+ ' +' + 1000 + ' 点 ')
         game.lichi_num -= 1
     }
     no_print = 1;
@@ -608,11 +619,14 @@ function CalScore_OK() {
                 score_give(i, zimo_idx, ScoreUpper(base_score * 2) + 100 * game.benchang);
                 tmp = ScoreUpper(base_score * 2) + 100 * game.benchang;
                 $("#myTab0_Content3").append('<STRONG>'+player[i].playerName+ '</STRONG> 失去' + tmp + ' 点 ');
+                localStorage.setItem('log', localStorage.getItem('log') + player[i].playerName+ ' 失去' + tmp + ' 点 ')
                 chickenList[zimo_idx] = 1;
             }
             $("#myTab0_Content3").append('<STRONG>'+player[zimo_idx].playerName+ '</STRONG> 自摸！得到' + tmp*3 + ' 点 ');
+            localStorage.setItem('log', localStorage.getItem('log') + player[zimo_idx].playerName+ ' 自摸！得到' + tmp*3 + ' 点 ')
             hu_count[zimo_idx]++;
             $("#myTab0_Content3").append('<br>');
+            localStorage.setItem('log', localStorage.getItem('log') + '\n')
             next_Game(true, true);
         } else { //闲家自摸
             for (var i = 0; i < 4; i++) {
@@ -620,15 +634,18 @@ function CalScore_OK() {
                 if (i == zimo_idx) {
                     var tmp2 = base_score * 3 + 300 * game.benchang;
                     $("#myTab0_Content3").append('<STRONG>'+player[zimo_idx].playerName+ '</STRONG> 自摸！得到' + tmp2+ ' 点 ');
+                    localStorage.setItem('log', localStorage.getItem('log') + player[zimo_idx].playerName+ ' 自摸！得到' + tmp2+ ' 点 ')
                     hu_count[zimo_idx]++;
                     continue;
                 }
                 score_give(i, zimo_idx, ScoreUpper(base_score * (1 + (i == game.jushu - 1))) + 100 * game.benchang);
                 tmp = ScoreUpper(base_score * (1 + (i == game.jushu - 1))) + 100 * game.benchang;
                 $("#myTab0_Content3").append('<STRONG>'+player[i].playerName+ '</STRONG> 失去' + tmp + ' 点 ');
+                localStorage.setItem('log', localStorage.getItem('log') + player[i].playerName+ ' 失去' + tmp + ' 点 ')
                 chickenList[zimo_idx] = 1;
             }
             $("#myTab0_Content3").append('<br>');
+            localStorage.setItem('log', localStorage.getItem('log') + '\n')
             next_Game(false,false);
         }
         //处理立直棒
@@ -654,6 +671,7 @@ function CalScore_OK() {
             }
         }
         $("#myTab0_Content3").append('<br>');
+        localStorage.setItem('log', localStorage.getItem('log') + '\n')
         Set_OKbtn_Text();
         if (rong_flag[0] + rong_flag[1] + rong_flag[2] + rong_flag[3] == 0) { //处理完全部胡牌了
             deal_dianpao();
@@ -667,6 +685,7 @@ function CalScore_OK() {
 function collect_lichi(idx) { //第idx玩家获得剩下所有立直棒。
     if (game.lichi_num != 0) {
         $("#myTab0_Content3").append('<strong>'+player[idx].playerName+ '</strong> 得到立直棒 ' + game.lichi_num*1000 + ' 点 ');
+        localStorage.setItem('log', localStorage.getItem('log') + player[idx].playerName+ ' 得到立直棒 ' + game.lichi_num*1000 + ' 点 ')
     }
     player[idx].Point += 1000 * game.lichi_num;
     game.lichi_num = 0;
@@ -685,6 +704,8 @@ function deal_dianpao() {
         var tmp = ScoreUpper(score * (4 + 2 * (rong_player == game.jushu - 1))) + 300 * game.benchang;
         $("#myTab0_Content3").append('<STRONG>'+player[dianpao_player].playerName+ '</STRONG> 点炮！ ' + '<EM>' + player[rong_player].playerName 
         + ' </EM>得到 '+ tmp + ' 点 ');
+        localStorage.setItem('log', localStorage.getItem('log') + player[dianpao_player].playerName+ ' 点炮！ ' + '' + player[rong_player].playerName
+        + ' 得到 '+ tmp + ' 点 ')
         pao_count[dianpao_player]++;
         hu_count[rong_player]++;
         //寻找最近的作为立直棒所有者
@@ -767,6 +788,7 @@ function liuju_cal(score_list, oya_lose) {
     for (var i = 0; i < 4; i++) {
         player[i].Point += score_list[i];
         $("#myTab0_Content3").append('<strong>'+player[i].playerName+ '</strong>  + ' + score_list[i]+' 流局！！！！ <br>');
+        localStorage.setItem('log', localStorage.getItem('log') + player[i].playerName+ '  + ' + score_list[i]+' 流局！！！！ \n')
     }
     next_Game(!oya_lose,true);
     UpdateAllView();
@@ -786,6 +808,11 @@ function end_game() {
             player[2].playerName + ":" + (rankList[2] + 1) + "位:" + player[2].Point + ':' +
             player[3].playerName + ":" + (rankList[3] + 1) + "位:" + player[3].Point +
         '</br>');
+        localStorage.setItem('log', localStorage.getItem('log') + '半庄结算:' +
+            player[0].playerName + ":" + (rankList[0] + 1) + "位:" + player[0].Point + ':' +
+            player[1].playerName + ":" + (rankList[1] + 1) + "位:" + player[1].Point + ':' +
+            player[2].playerName + ":" + (rankList[2] + 1) + "位:" + player[2].Point + ':' +
+            player[3].playerName + ":" + (rankList[3] + 1) + "位:" + player[3].Point + '\n')
     alert(player[0].playerName + (rankList[0] + 1) + "位 " + rankDict[rankList[0]] + '\n' +
         player[1].playerName + (rankList[1] + 1) + "位 " + rankDict[rankList[1]] + '\n' +
         player[2].playerName + (rankList[2] + 1) + "位 " + rankDict[rankList[2]] + '\n' +
