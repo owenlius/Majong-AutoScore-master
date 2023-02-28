@@ -4,7 +4,7 @@ Majong-AutoScore
 
 原版本链接https://github.com/Mahosyojyo/Majong-AutoScore
 
-
+1
 
 ================
 
